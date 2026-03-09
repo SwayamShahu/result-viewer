@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+
+            <!-- Logo -->
+            <a th:href="@{/}" class="text-2xl font-bold text-blue-600">
+                Result Viewer
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6 font-medium">
+                <a th:href="@{/}" class="hover:text-blue-600">Home</a>
+                <a th:href="@{/view-result}" class="hover:text-blue-600">View Result</a>
+                <a th:href="@{/admin/add-result}" class="hover:text-blue-600">Add Results</a>
+                <a href="#" class="hover:text-blue-600">Help</a>
+            </div>
+
+            <!-- Mobile Button -->
+            <button id="menu-btn" class="md:hidden text-2xl">
+                ☰
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 font-medium">
+        <a th:href="@{/}" class="block py-2">Home</a>
+        <a th:href="@{/view-result}" class="block py-2">View Result</a>
+        <a th:href="@{/admin/add-result}" class="block py-2">Add Results</a>
+        <a href="#" class="block py-2">Help</a>
+    </div>
+</nav>
+
+
+<!-- HERO SECTION -->
+<section class="bg-blue-600 text-white py-20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Result Viewer
+        </h1>
+        <p class="text-lg mb-6">
+            Easily view and manage student results in one place.
+        </p>
+
+        <a th:href="@{/view-result}"
+           class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            View Results
+        </a>
+    </div>
+</section>
+
+
+<!-- FEATURES -->
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-10">Features</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <h3 class="text-xl font-semibold mb-2">Fast Result Access</h3>
+                <p class="text-gray-600">
+                    Students can quickly check their results online.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <h3 class="text-xl font-semibold mb-2">Secure Data</h3>
+                <p class="text-gray-600">
+                    Student information is stored safely and securely.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <h3 class="text-xl font-semibold mb-2">Easy Management</h3>
+                <p class="text-gray-600">
+                    Teachers can easily manage student marks.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- CALL TO ACTION -->
+<section class="bg-blue-600 text-white py-16">
+    <div class="max-w-4xl mx-auto text-center px-6">
+        <h2 class="text-3xl font-bold mb-4">
+            Start Viewing Results Today
+        </h2>
+        <p class="mb-6">
+            Access results instantly with our platform.
+        </p>
+
+        <a th:href="@{/view-result}"
+           class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
+            Get Started
+        </a>
+    </div>
+</section>
+
+
+<!-- TESTIMONIALS -->
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-3xl font-bold mb-10">What Users Say</h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <p class="text-gray-600 mb-4">
+                    "Very easy to check results."
+                </p>
+                <h4 class="font-semibold">Student</h4>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <p class="text-gray-600 mb-4">
+                    "Managing marks is now simple."
+                </p>
+                <h4 class="font-semibold">Teacher</h4>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow">
+                <p class="text-gray-600 mb-4">
+                    "Perfect platform for schools."
+                </p>
+                <h4 class="font-semibold">Admin</h4>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- MOBILE MENU SCRIPT -->
+<script>
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("mobile-menu");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+</script>
+
+</body>
+</html>
