@@ -1,10 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Student Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    Add Result
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+
+<nav class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+
+            <a th:href="@{/}" class="text-2xl font-bold text-blue-600">
+                Result Viewer
+            </a>
+
+            <div class="hidden md:flex space-x-6 font-medium">
+                <a th:href="@{/}" class="hover:text-blue-600">Home</a>
+                <a th:href="@{/view-result}" class="hover:text-blue-600">View Result</a>
+                <a th:href="@{/admin/add-result}" class="hover:text-blue-600">Add Results</a>
+                <a th:href="@{/help}" class="hover:text-blue-600">Help</a>
+            </div>
+
+        </div>
+    </div>
+
+</nav>
+
+<div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+
+        <h2 class="text-3xl font-bold text-center text-blue-600 mb-8">
+        Add Student Result
+    </h2>
+
+    <form th:action="@{/admin/add-result}" th:object="${studentForm}" method="post" class="space-y-6">
+
+        <!-- Name -->
+        <div>
+            <label class="block font-semibold mb-1">Student Name</label>
+            <input type="text" th:field="*{name}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Roll Number -->
+        <div>
+            <label class="block font-semibold mb-1">Roll Number</label>
+            <input type="text" th:field="*{rollNumber}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block font-semibold mb-1">Email</label>
+            <input type="email" th:field="*{email}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Address -->
+        <div>
+            <label class="block font-semibold mb-1">Address</label>
+            <textarea th:field="*{address}" class="w-full border rounded-lg p-2"></textarea>
+        </div>
+
+        <!-- School -->
+        <div>
+            <label class="block font-semibold mb-1">School Name</label>
+            <input type="text" th:field="*{schoolName}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Profile Photo -->
+        <div>
+            <label class="block font-semibold mb-1">Profile Photo URL</label>
+            <input type="text" th:field="*{profilePhoto}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- DOB -->
+        <div>
+            <label class="block font-semibold mb-1">Date of Birth</label>
+            <input type="date" th:field="*{dob}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Class -->
+        <div>
+            <label class="block font-semibold mb-1">Class</label>
+            <select th:field="*{standard}" class="w-full border rounded-lg p-2">
+
+                <option value="">Select Class</option>
+
+                <option th:each="std : ${standardOptions}"
+                        th:value="${std}"
+                        th:text="${std}">
+                </option>
+
+            </select>
+        </div>
+
+        <!-- Father -->
+        <div>
+            <label class="block font-semibold mb-1">Father Name</label>
+            <input type="text" th:field="*{fatherName}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Gender -->
+        <div>
+            <label class="block font-semibold mb-1">Gender</label>
+            <select th:field="*{gender}" class="w-full border rounded-lg p-2">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label class="block font-semibold mb-1">Password</label>
+            <input type="password" th:field="*{password}" class="w-full border rounded-lg p-2">
+        </div>
+
+        <!-- Subjects -->
+        <div class="border-t pt-6">
+
+            <h3 class="text-xl font-semibold mb-4 text-blue-600">
+                Subjects
+            </h3>
+
+            <p class="text-gray-500 mb-4">
+                Click "Add Subject" to enter marks.
+            </p>
+
+            <div id="subjects-container"></div>
+
+            <button type="button"
+                    onclick="addSubject()"
+                    class="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                + Add Subject
+            </button>
+
+        </div>
+
+        <!-- Submit -->
+        <div class="text-center">
+            <button type="submit"
+                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                Save Result
+            </button>
+        </div>
+
+    </form>
+    </div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let message = "[[${successMessage}]]";
+        if(message && message !== "null"){
+            alert(message);
+        }
+    });
+
+    let subjectIndex = 0;
+
+    function addSubject(){
+
+        const container = document.getElementById("subjects-container");
+
+        const row = document.createElement("div");
+        row.className = "grid grid-cols-6 gap-3 mb-3";
+
+        row.innerHTML = `
+            <input type="text"
+                   name="marks[${subjectIndex}].subjectName"
+                   placeholder="Subject"
+                   class="border p-2 rounded">
+
+            <input type="number"
+                   name="marks[${subjectIndex}].marks"
+                   placeholder="Marks"
+                   class="border p-2 rounded">
+
+            <input type="number"
+                   name="marks[${subjectIndex}].maxMarks"
+                   placeholder="Max Marks"
+                   class="border p-2 rounded">
+
+            <input type="text"
+                   name="marks[${subjectIndex}].grade"
+                   placeholder="Grade"
+                   class="border p-2 rounded">
+
+            <input type="text"
+                   name="marks[${subjectIndex}].feedback"
+                   placeholder="Feedback"
+                   class="border p-2 rounded">
+
+            <button type="button"
+                    onclick="removeRow(this)"
+                    class="bg-red-500 text-white px-3 rounded">
+                X
+            </button>
+        `;
+
+        container.appendChild(row);
+
+        subjectIndex++;
+
+    }
+
+    function removeRow(button){
+        button.parentElement.remove();
+    }
+
+</script>
+
 </body>
 </html>

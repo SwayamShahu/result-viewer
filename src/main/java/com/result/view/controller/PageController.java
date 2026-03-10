@@ -15,4 +15,9 @@ public class PageController {
     public String viewResultPage(){
         return "viewResultForm";
     }
+
+    @GetMapping("/help")
+    public String help(){
+        return "help";
+    }
 }
