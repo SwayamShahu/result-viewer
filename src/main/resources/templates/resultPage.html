@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Print Styling -->
+    <style>
+        @media print {
+            nav, .print-btn {
+                display: none;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+
+            <a th:href="@{/}" class="text-2xl font-bold text-blue-600">
+                Result Viewer
+            </a>
+
+            <div class="hidden md:flex space-x-6 font-medium">
+                <a th:href="@{/}" class="hover:text-blue-600">Home</a>
+                <a th:href="@{/view-result}" class="hover:text-blue-600">View Result</a>
+                <a th:href="@{/admin/add-result}" class="hover:text-blue-600">Add Results</a>
+                <a th:href="@{/help}" class="hover:text-blue-600">Help</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-2xl">
+                ☰
+            </button>
+
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 font-medium">
+        <a th:href="@{/}" class="block py-2">Home</a>
+        <a th:href="@{/view-result}" class="block py-2">View Result</a>
+        <a th:href="@{/admin/add-result}" class="block py-2">Add Results</a>
+        <a th:href="@{/help}" class="block py-2">Help</a>
+    </div>
+</nav>
+
+
+<!-- Result Section -->
+<div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
+
+    <h1 class="text-3xl font-bold text-center text-green-600 mb-6">
+        Student Result
+    </h1>
+
+    <!-- Print Button -->
+    <div class="text-right mb-4 print-btn">
+        <button onclick="window.print()"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            Print Result
+        </button>
+    </div>
+
+    <!-- Student Info -->
+    <div class="mb-6 text-gray-700 space-y-1">
+
+        <p>
+            <strong>Student Name:</strong>
+            <span th:text="${student.name}"></span>
+        </p>
+
+        <p>
+            <strong>Roll Number:</strong>
+            <span th:text="${student.rollNumber}"></span>
+        </p>
+
+        <p>
+            <strong>Date of Birth:</strong>
+            <span th:text="${#temporals.format(student.dob,'dd MMM yyyy')}"></span>
+        </p>
+
+        <p>
+            <strong>School:</strong>
+            <span th:text="${student.schoolName}"></span>
+        </p>
+
+        <p>
+            <strong>Standard:</strong>
+            <span th:text="${student.standard}"></span>
+        </p>
+
+    </div>
+
+
+    <!-- Marks Table -->
+    <table class="w-full border border-gray-300 mt-6">
+
+        <thead class="bg-gray-200">
+        <tr>
+            <th class="border p-2">Subject</th>
+            <th class="border p-2">Marks</th>
+            <th class="border p-2">Grade</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="mark : ${marks}">
+            <td class="border p-2" th:text="${mark.subjectName}"></td>
+
+            <td class="border p-2">
+                <span th:text="${mark.marks}"></span> /
+                <span th:text="${mark.maxMarks}"></span>
+            </td>
+
+            <td class="border p-2 font-semibold" th:text="${mark.grade}"></td>
+        </tr>
+
+        <tr th:if="${marks == null or #lists.isEmpty(marks)}">
+            <td colspan="3" class="text-center p-4 text-red-500">
+                No Result Found
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- Mobile Menu Script -->
+<script>
+    const btn = document.getElementById("menu-btn");
+    const menu = document.getElementById("mobile-menu");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+    });
+</script>
+
+</body>
+</html>
